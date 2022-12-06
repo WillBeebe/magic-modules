@@ -36,7 +36,7 @@ objects:
       method_name_separator: ':'
       parent_resource_attribute: 'name'
       fetch_iam_policy_verb: :POST
-      import_format: ["projects/{{project}}/locations/{{location}}/queues/{{name}}", "{{name}}"]      
+      import_format: ["projects/{{project}}/locations/{{location}}/queues/{{name}}", "{{name}}"]
     parameters:
       - !ruby/object:Api::Type::Enum
         name: 'status'
@@ -187,7 +187,30 @@ objects:
               Specifies the fraction of operations to write to Stackdriver Logging.
               This field may contain any value between 0.0 and 1.0, inclusive. 0.0 is the
               default and means that no operations are logged.
-
+  - !ruby/object:Api::Resource
+      name: 'Task'
+      base_url: projects/{{project}}/locations/{{location}}/queues/{{queue_id}}//tasks
+      update_verb: :PATCH
+      update_mask: true
+      description: |
+        A Cloud Task task.
+      iam_policy: !ruby/object:Api::Resource::IamPolicy
+        method_name_separator: ':'
+        parent_resource_attribute: 'name'
+        fetch_iam_policy_verb: :POST
+        import_format: ["projects/{{project}}/locations/{{location}}/queues/{{queue_id}}/tasks/{{name}}", "{{name}}"]
+      parameters:
+        - !ruby/object:Api::Type::String
+          name: 'location'
+          required: true
+          input: true
+          description: The location of the queue
+      properties:
+        - !ruby/object:Api::Type::String
+          name: 'name'
+          input: true
+          description: The queue name.
+          pattern: projects/{{project}}/locations/{{location}}/queues/{{name}}
 
 
 
